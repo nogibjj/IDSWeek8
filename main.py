@@ -4,7 +4,7 @@ import os
 import psutil
 
 start_time = time.time()
-
+psutil.cpu_percent(interval=None) 
 # Read dataset
 df = pd.read_csv('games_details.csv')
 
@@ -19,3 +19,5 @@ end_time = time.time()
 print(f"Execution Time: {end_time - start_time} seconds")
 process = psutil.Process(os.getpid())
 print(f"Memory Usage: {process.memory_info().rss / 1024**2} MB")
+cpu_usage = psutil.cpu_percent(interval=1)  # Measure over 1 second
+print(f"CPU Usage: {cpu_usage}%")

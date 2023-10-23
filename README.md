@@ -1,57 +1,45 @@
-# IDS Week 2 
+[![Python package](https://github.com/nogibjj/IDSWeek8/actions/workflows/python-package.yml/badge.svg)](https://github.com/nogibjj/IDSWeek8/actions/workflows/python-package.yml)
+## Rust vs Python: Performance Comparison
 
-Data visualization using pandas.
+This repository contains a comparison of performance metrics between Rust and Python while handling and sorting a large CSV dataset.
 
-## Makefile Usage
+### Objective
 
-Our `Makefile` contains several rules to simplify the development process:
+The goal was to determine the differences in execution time, memory usage, and CPU usage between Rust and Python while processing and sorting the same dataset.
 
-- **install**: Installs the necessary dependencies from the `requirements.txt` file.
-- **lint**: Runs `flake8` to lint the code inside the `src` directory.
-- **test**: Executes unit tests using `pytest`.
+### Method
 
-To use the Makefile:
+1. A CSV dataset of many NBA games located at `/workspaces/IDSWeek8/games_details.csv` was utilized.
+2. The dataset was read, deserialized into structures/objects, and sorted based on the 'PTS' column.
+3. Performance metrics (execution time, memory usage, and CPU usage) were captured to see differences between rust and python.
 
-### Installing Dependencies
+### Results
 
-This will install all required packages from `requirements.txt`:
+Here are the observed results for both Rust and Python:
 
+| Metric        | Rust                          | Python                       |Rust Improvement 
+|---------------|-------------------------------|------------------------------|-----------------
+| Execution Time| 214.442249ms                  | 937.6165866851807ms          |4.37x
+| Memory Usage  | 1 MB                          | 352.7890625 MB               |353x
+| CPU Usage     | 92.50%                        | 7.2%                         | 13x Worse
+
+### Analysis
+
+Rust displayed significantly faster execution time and considerably lower memory usage than Python. However, Rust's CPU usage was notably higher. This could be attributed to Rust's ability to leverage system resources more aggressively to achieve faster execution speeds.
+
+### Python Script Usage
 ```bash
-make install
+python main.py
 ```
+![Alt text](PythonScriptRun.png)
 
-### Linting the Code
-
-To check the code quality and maintain coding standards, run:
-
+### Rust Script Usage
 ```bash
-make lint
+cd rustStuff/
+cargo build
+cargo run --release
 ```
+![Alt text](RustScriptRun.png)
+### Conclusion
 
-### Running Tests
-
-To execute unit tests:
-
-```bash
-make test
-```
-
-## Data Visualization
-
-Below is the histogram showcasing the distribution of Rotten Tomatoes Percentages:
-
-![Histogram](./histogram.png)
-
-## Summary Statistics
-                        Audience score %  Profitability  Rotten Tomatoes %  Year
-            count         46.000000      46.000000          46.000000    46.000000
-            mean          64.195652       5.138843          48.326087  2009.065217
-            std           13.071801      10.038464          26.619170     1.436078
-            min           40.000000       0.000000           3.000000  2007.000000
-            25%           52.500000       1.858302          27.250000  2008.000000
-            50%           62.500000       2.640843          46.500000  2009.000000
-            75%           76.000000       4.977038          69.500000  2010.000000
-            max           89.000000      66.934000          93.000000  2011.000000
-Mean of 'Rotten Tomatoes %': 48.32608695652174\
-Median of 'Rotten Tomatoes %': 46.5\
-Standard Deviation of 'Rotten Tomatoes %': 26.61916965716089
+For tasks involving reading, deserializing, and sorting large datasets, Rust can offer improvements in execution speed and memory efficiency compared to Python, albeit with higher CPU usage.
